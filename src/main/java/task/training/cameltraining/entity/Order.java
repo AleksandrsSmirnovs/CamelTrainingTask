@@ -1,5 +1,6 @@
 package task.training.cameltraining.entity;
 
+import lombok.Builder;
 import task.training.cameltraining.entity.enums.OrderPriority;
 
 import javax.persistence.*;
