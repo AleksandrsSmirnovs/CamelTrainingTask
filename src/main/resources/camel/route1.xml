@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<route id="route1" xmlns="http://camel.apache.org/schema/spring">
+    <from uri="file:src/in?noop=true"/>
+    <log message="Processing file: ${header.CamelFileName}"/>
+    <split streaming="true">
+        <tokenize token="\n"/>
+        <unmarshal>
+            <bindy type="Csv" classType="task.training.cameltraining.model.OrderCsvRecord"/>
+        </unmarshal>
+<!--        <convertBodyTo type="String"/>-->
+<!--        <bean ref="task.training.cameltraining.converter.CsvToOrder"/>-->
+        <log message="${body}"/>
+        <to uri="direct:foo"/>
+    </split>
+    <log message="Done processing file: ${header.CamelFileName}"/>
+</route>
