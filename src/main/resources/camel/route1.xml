@@ -5,19 +5,23 @@
     <log message="Processing file: ${header.CamelFileName}"/>
     <split streaming="true">
         <tokenize token="\n"/>
-                <choice>
-                    <when>
-                        <simple>${exchangeProperty.CamelSplitIndex} > 0</simple>
-                        <unmarshal>
-                            <bindy type="Csv" classType="task.training.cameltraining.model.OrderCsvRecord"/>
-                        </unmarshal>
-                        <log message="${body}"/>
-                        <to uri="direct:foo"/>
-                    </when>
-                    <otherwise>
-                        <stop/>
-                    </otherwise>
-                </choice>
+        <choice>
+            <when>
+                <simple>${exchangeProperty.CamelSplitIndex} > 0</simple>
+                <unmarshal>
+                    <bindy type="Csv" classType="task.training.cameltraining.model.OrderCsvRecord"/>
+                </unmarshal>
+                <filter>
+                    <simple>${body.getSalesChannel} startsWith 'Off'</simple>
+                    <stop/>
+                </filter>
+                <log message="${body}"/>
+                <to uri="direct:foo"/>
+            </when>
+            <otherwise>
+                <stop/>
+            </otherwise>
+        </choice>
     </split>
     <log message="Done processing file: ${header.CamelFileName}"/>
 </route>

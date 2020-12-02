@@ -3,5 +3,6 @@
 <route id="route2" xmlns="http://camel.apache.org/schema/spring">
     <from uri="direct:foo"/>
     <log message="${body}"/>
+    <stop/>
 
 </route>

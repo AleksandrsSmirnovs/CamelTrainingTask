@@ -1,6 +1,7 @@
 package task.training.cameltraining.model;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
@@ -54,5 +55,59 @@ public class OrderCsvRecord {
     @DataField(pos = 14, trim = true)
     private String totalProfit;
 
+    public String getRegion() {
+        return region;
+    }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public String getSalesChannel() {
+        return salesChannel;
+    }
+
+    public char getOrderPriority() {
+        return orderPriority;
+    }
+
+    public String getOrderDate() {
+        return orderDate;
+    }
+
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public String getShipDate() {
+        return shipDate;
+    }
+
+    public int getUnitsSold() {
+        return unitsSold;
+    }
+
+    public String getUnitPrice() {
+        return unitPrice;
+    }
+
+    public String getUnitCost() {
+        return unitCost;
+    }
+
+    public String getTotalRevenue() {
+        return totalRevenue;
+    }
+
+    public String getTotalCost() {
+        return totalCost;
+    }
+
+    public String getTotalProfit() {
+        return totalProfit;
+    }
 }
