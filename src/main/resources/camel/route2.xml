@@ -2,6 +2,8 @@
 
 <route id="route2" xmlns="http://camel.apache.org/schema/spring">
     <from uri="direct:foo"/>
+    <bean ref="task.training.cameltraining.converter.CsvRecordToOrder"/>
+    <bean ref="task.training.cameltraining.service.OrderService" method="saveOrder"/>
     <log message="${body}"/>
     <stop/>
 
