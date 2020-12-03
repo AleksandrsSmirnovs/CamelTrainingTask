@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<route id="route3" xmlns="http://camel.apache.org/schema/spring">
+    <from uri="direct:baz"/>
+    <setHeader name="country">
+        <simple>${body.getCountry}</simple>
+    </setHeader>
+    <log message="Header is ${header.country}"/>
+    <aggregate strategyRef="task.training.cameltraining.util.CountryAggregationStrategy" completionTimeout="10000" >
+        <correlationExpression>
+            <simple>header.country</simple>
+        </correlationExpression>
+        <log message="Sending out ${body}"/>
+    </aggregate>
+
+</route>

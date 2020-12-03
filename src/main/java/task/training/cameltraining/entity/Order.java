@@ -44,6 +44,18 @@ public class Order {
     @Column(name = "country")
     private String country;
 
+    @Transient
+    private String region;
+
+    @Transient
+    private int unitsSold;
+
+    @Transient
+    private BigDecimal unitPrice;
+
+    @Transient
+    private BigDecimal unitCost;
+
     public long getId() {
         return id;
     }
@@ -124,6 +136,22 @@ public class Order {
         this.country = country;
     }
 
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public int getUnitsSold() {
+        return unitsSold;
+    }
+
+    public void setUnitsSold(int unitsSold) {
+        this.unitsSold = unitsSold;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -160,5 +188,21 @@ public class Order {
                 ", itemType='" + itemType + '\'' +
                 ", country='" + country + '\'' +
                 '}';
+    }
+
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public BigDecimal getUnitCost() {
+        return unitCost;
+    }
+
+    public void setUnitCost(BigDecimal unitCost) {
+        this.unitCost = unitCost;
     }
 }

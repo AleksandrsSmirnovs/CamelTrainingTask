@@ -1,4 +1,4 @@
-package task.training.cameltraining.converter;
+package task.training.cameltraining.util;
 
 import org.springframework.stereotype.Component;
 import task.training.cameltraining.entity.Order;
@@ -25,6 +25,10 @@ public class CsvRecordToOrder {
         order.setProfit(new BigDecimal(csvRecord.getTotalProfit()));
         order.setItemType(csvRecord.getItemType());
         order.setCountry(csvRecord.getCountry());
+        order.setRegion(csvRecord.getRegion());
+        order.setUnitsSold(csvRecord.getUnitsSold());
+        order.setUnitPrice(new BigDecimal(csvRecord.getUnitPrice()));
+        order.setUnitCost(new BigDecimal(csvRecord.getUnitCost()));
         return order;
     }
 
