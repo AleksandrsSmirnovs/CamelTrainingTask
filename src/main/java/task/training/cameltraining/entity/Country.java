@@ -1,22 +1,40 @@
 package task.training.cameltraining.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
+import org.apache.camel.dataformat.bindy.annotation.DataField;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 @Component
 public class Country {
 
+    private String region;
+
+    @DataField(pos = 2)
     private String countryName;
+
+    @DataField(pos = 3)
     private int orderCount;
+
+    @DataField(pos = 4)
     private BigDecimal averageUnitsSold;
+
+    @DataField(pos = 5)
     private BigDecimal averageUnitPrice;
+
+    @DataField(pos = 6)
     private BigDecimal averageUnitCost;
+
+    @DataField(pos = 7)
     private BigDecimal totalRevenueInMillions;
+
+    @DataField(pos = 8)
     private BigDecimal totalCostInMillions;
+
+    @DataField(pos = 9)
     private BigDecimal totalProfitInMillions;
 
     public String getCountryName() {
@@ -132,5 +150,46 @@ public class Country {
                         .setScale(6, RoundingMode.HALF_EVEN));
     }
 
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Country country = (Country) o;
+        return orderCount == country.orderCount &&
+                Objects.equals(countryName, country.countryName) &&
+                Objects.equals(averageUnitsSold, country.averageUnitsSold) &&
+                Objects.equals(averageUnitPrice, country.averageUnitPrice) &&
+                Objects.equals(averageUnitCost, country.averageUnitCost) &&
+                Objects.equals(totalRevenueInMillions, country.totalRevenueInMillions) &&
+                Objects.equals(totalCostInMillions, country.totalCostInMillions) &&
+                Objects.equals(totalProfitInMillions, country.totalProfitInMillions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(countryName, orderCount, averageUnitsSold, averageUnitPrice, averageUnitCost, totalRevenueInMillions, totalCostInMillions, totalProfitInMillions);
+    }
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "countryName='" + countryName + '\'' +
+                ", orderCount=" + orderCount +
+                ", averageUnitsSold=" + averageUnitsSold +
+                ", averageUnitPrice=" + averageUnitPrice +
+                ", averageUnitCost=" + averageUnitCost +
+                ", totalRevenueInMillions=" + totalRevenueInMillions +
+                ", totalCostInMillions=" + totalCostInMillions +
+                ", totalProfitInMillions=" + totalProfitInMillions +
+                '}';
+    }
 
 }

@@ -2,15 +2,32 @@
 
 <route id="route3" xmlns="http://camel.apache.org/schema/spring">
     <from uri="direct:baz"/>
+    <bean ref="task.training.cameltraining.util.CsvRecordToOrder"/>
+    <bean ref="task.training.cameltraining.service.OrderService" method="saveOrder"/>
+    <log message="${body}"/>
     <setHeader name="country">
         <simple>${body.getCountry}</simple>
     </setHeader>
     <log message="Header is ${header.country}"/>
-    <aggregate strategyRef="task.training.cameltraining.util.CountryAggregationStrategy" completionTimeout="10000" >
+    <aggregate strategyRef="countryAggregationStrategy" completionTimeout="1">
         <correlationExpression>
-            <simple>header.country</simple>
+            <header>country</header>
         </correlationExpression>
         <log message="Sending out ${body}"/>
+        <setHeader name="region">
+            <simple>${body.region}</simple>
+        </setHeader>
+        <aggregate strategyRef="regionAggregationStrategy" completionTimeout="1000">
+            <correlationExpression>
+                <header>region</header>
+            </correlationExpression>
+            <log message="Sending out ${body}"/>
+            <marshal>
+                <bindy type="Csv" classType="task.training.cameltraining.entity.Region"/>
+            </marshal>
+            <to uri="file:src/out/shit"/>
+
+        </aggregate>
     </aggregate>
 
 </route>

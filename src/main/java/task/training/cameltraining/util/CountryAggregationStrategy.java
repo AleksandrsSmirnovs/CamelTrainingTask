@@ -1,16 +1,18 @@
 package task.training.cameltraining.util;
 
+import lombok.Data;
 import org.apache.camel.AggregationStrategy;
 import org.apache.camel.Exchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import task.training.cameltraining.entity.Country;
 import task.training.cameltraining.entity.Order;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-@Component
+@Service
 public class CountryAggregationStrategy implements AggregationStrategy {
 
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
@@ -18,6 +20,7 @@ public class CountryAggregationStrategy implements AggregationStrategy {
         if (oldExchange == null) {
             Country country = new Country();
             country.setCountryName(order.getCountry());
+            country.setRegion(order.getRegion());
             country.setOrderCount(1);
             country.setAverageUnitsSold(BigDecimal.valueOf(order.getUnitsSold()));
             country.setAverageUnitPrice(order.getUnitPrice());

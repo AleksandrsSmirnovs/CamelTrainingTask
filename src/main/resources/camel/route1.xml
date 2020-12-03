@@ -18,7 +18,7 @@
         </filter>
         <log message="${body}"/>
         <to uri="direct:baz"/>
-        <to uri="direct:persistOrders"/>
+<!--        <to uri="direct:persistOrders"/>-->
     </split>
     <log message="Done processing file: ${header.CamelFileName}"/>
 </route>
