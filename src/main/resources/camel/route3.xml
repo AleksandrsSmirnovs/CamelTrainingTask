@@ -4,30 +4,48 @@
     <from uri="direct:baz"/>
     <bean ref="task.training.cameltraining.util.CsvRecordToOrder"/>
     <bean ref="task.training.cameltraining.service.OrderService" method="saveOrder"/>
-    <log message="${body}"/>
     <setHeader name="country">
         <simple>${body.getCountry}</simple>
     </setHeader>
     <log message="Header is ${header.country}"/>
-    <aggregate strategyRef="countryAggregationStrategy" completionTimeout="1">
+    <log message="${body}"/>
+    <aggregate strategyRef="countryAggregationStrategy" completionTimeout="1000">
         <correlationExpression>
             <header>country</header>
         </correlationExpression>
         <log message="Sending out ${body}"/>
         <setHeader name="region">
-            <simple>${body.region}</simple>
+            <simple>${body.getRegion}</simple>
         </setHeader>
-        <aggregate strategyRef="regionAggregationStrategy" completionTimeout="1000">
+        <aggregate strategyRef="regionAggregationStrategy" completionTimeout="10000">
             <correlationExpression>
                 <header>region</header>
             </correlationExpression>
-            <log message="Sending out ${body}"/>
             <marshal>
                 <bindy type="Csv" classType="task.training.cameltraining.entity.Region"/>
             </marshal>
-            <to uri="file:src/out/shit"/>
-
+            <to uri="file:src/out/?fileName=${header.region}"/>
         </aggregate>
+
+
+
+
     </aggregate>
+
+<!--    <setHeader name="region">-->
+<!--        <simple>${body.region}</simple>-->
+<!--    </setHeader>-->
+
+<!--    <aggregate strategyRef="regionAggregationStrategy" completionTimeout="99999999">-->
+<!--        <correlationExpression>-->
+<!--            <header>region</header>-->
+<!--        </correlationExpression>-->
+<!--        <log message="Sending out ${body}"/>-->
+<!--        <marshal>-->
+<!--            <bindy type="Csv" classType="task.training.cameltraining.entity.Region"/>-->
+<!--        </marshal>-->
+<!--        <to uri="file:src/out/shit"/>-->
+
+<!--    </aggregate>-->
 
 </route>

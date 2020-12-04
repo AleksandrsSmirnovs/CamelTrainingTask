@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Component
 @CsvRecord(separator = ",", generateHeaderColumns = true)
 public class Region {
 
-    @DataField(pos = 1)
     private String name;
 
     @OneToMany

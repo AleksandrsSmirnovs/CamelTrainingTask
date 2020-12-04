@@ -11,6 +11,7 @@ import java.util.Objects;
 @Component
 public class Country {
 
+    @DataField(pos = 1)
     private String region;
 
     @DataField(pos = 2)
@@ -109,45 +110,52 @@ public class Country {
         averageUnitsSold = averageUnitsSold
                 .multiply(BigDecimal.valueOf(orderCount))
                 .add(BigDecimal.valueOf(order.getUnitsSold()))
-                .divide(BigDecimal.valueOf(orderCount + 1)
-                        .setScale(2, RoundingMode.HALF_EVEN));
+                .divide(BigDecimal.valueOf(orderCount + 1),3,RoundingMode.HALF_EVEN)
+                .setScale(3, RoundingMode.HALF_EVEN);;
     }
 
     public void updateAverageUnitPrice(Order order) {
         averageUnitPrice = averageUnitPrice
                 .multiply(BigDecimal.valueOf(orderCount))
                 .add(order.getUnitPrice())
-                .divide(BigDecimal.valueOf(orderCount + 1)
-                        .setScale(2, RoundingMode.HALF_EVEN));
+                .divide(BigDecimal.valueOf(orderCount + 1),3,RoundingMode.HALF_EVEN)
+                .setScale(3, RoundingMode.HALF_EVEN);;
     }
 
     public void updateAverageUnitCost(Order order) {
         averageUnitCost = averageUnitCost
                 .multiply(BigDecimal.valueOf(orderCount))
                 .add(order.getUnitCost())
-                .divide(BigDecimal.valueOf(orderCount + 1)
-                        .setScale(2, RoundingMode.HALF_EVEN));
+                .divide(BigDecimal.valueOf(orderCount + 1),3,RoundingMode.HALF_EVEN)
+                .setScale(3, RoundingMode.HALF_EVEN);
     }
 
     public void addTotalRevenueInMillions(Order order) {
-        totalRevenueInMillions.add(
-                order.getRevenue()
-                .divide(BigDecimal.valueOf(1000000))
-                .setScale(6, RoundingMode.HALF_EVEN));
+        totalRevenueInMillions = totalRevenueInMillions.add(order.getRevenue().divide(BigDecimal.valueOf(1000000),3, RoundingMode.HALF_EVEN));
     }
 
     public void addTotalCostInMillions(Order order) {
-        totalCostInMillions.add(
+        totalCostInMillions = totalCostInMillions.add(
                 order.getCost()
-                        .divide(BigDecimal.valueOf(1000000))
+                        .divide(BigDecimal.valueOf(1000000), 6,RoundingMode.HALF_EVEN)
                         .setScale(6, RoundingMode.HALF_EVEN));
     }
 
     public void addTotalProfitInMillions(Order order) {
-        totalProfitInMillions.add(
+        totalProfitInMillions = totalProfitInMillions.add(
                 order.getProfit()
-                        .divide(BigDecimal.valueOf(1000000))
+                        .divide(BigDecimal.valueOf(1000000), 6,RoundingMode.HALF_EVEN)
                         .setScale(6, RoundingMode.HALF_EVEN));
+    }
+
+    public void updateCountry(Order order) {
+        updateAverageUnitsSold(order);
+        updateAverageUnitPrice(order);
+        updateAverageUnitCost(order);
+        addTotalProfitInMillions(order);
+        addTotalRevenueInMillions(order);
+        addTotalCostInMillions(order);
+        addOrderCount();
     }
 
     public String getRegion() {

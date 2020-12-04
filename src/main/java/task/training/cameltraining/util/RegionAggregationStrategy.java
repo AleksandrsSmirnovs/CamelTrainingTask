@@ -7,7 +7,9 @@ import task.training.cameltraining.entity.Country;
 import task.training.cameltraining.entity.Region;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class RegionAggregationStrategy implements AggregationStrategy {
